@@ -31,3 +31,5 @@ function render(element, parentDom) {
   // append to parent
   parentDom.appendChild(dom)
 }
+
+module.exports = render

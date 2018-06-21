@@ -6,7 +6,7 @@ require('./mock-browser')
 describe('check the functionality of the render function', () => {
   beforeEach(() => {
     let root = document.getElementById('root')
-    if(!root) {
+    if (!root) {
       root = document.createElement('div')
       root.id = 'root'
       document.body.appendChild(root)
@@ -33,7 +33,7 @@ describe('check the functionality of the render function', () => {
       type: 'div',
       props: {
         id: 'wrapper',
-      }
+      },
     }
     render(element, this.root)
     assert.equal(this.root.innerHTML, '<div id="wrapper"></div>')
@@ -43,11 +43,8 @@ describe('check the functionality of the render function', () => {
     const element = {
       type: 'span',
       props: {
-        children: [
-          { type: 'div', props: {} },
-          { type: 'span', props: {} },
-        ]
-      }
+        children: [{ type: 'div', props: {} }, { type: 'span', props: {} }],
+      },
     }
     render(element, this.root)
     assert.equal(this.root.innerHTML, '<span><div></div><span></span></span>')
@@ -59,17 +56,15 @@ describe('check the functionality of the render function', () => {
       props: {
         id: 'parent',
         children: [
-          { 
+          {
             type: 'div',
             props: {
               id: 'child',
-              children: [
-                { type: 'div', props: {id: 'grand-child'}}
-              ]
-            }
-          }
-        ]
-      }
+              children: [{ type: 'div', props: { id: 'grand-child' } }],
+            },
+          },
+        ],
+      },
     }
     render(element, this.root)
     assert.equal(
@@ -82,11 +77,13 @@ describe('check the functionality of the render function', () => {
     const element = {
       type: 'span',
       props: {
-        children: [{
-          type: 'TEXT_ELEMENT',
-          props: { nodeValue: 'Wabalabadubdub!' }
-        }]
-      }
+        children: [
+          {
+            type: 'TEXT_ELEMENT',
+            props: { nodeValue: 'Wabalabadubdub!' },
+          },
+        ],
+      },
     }
     render(element, this.root)
     assert.equal(this.root.innerHTML, '<span>Wabalabadubdub!</span>')

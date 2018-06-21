@@ -10,7 +10,6 @@ describe('check the functionality of the render function', () => {
       root = document.createElement('div')
       root.id = 'root'
       document.body.appendChild(root)
-      console.log(document.body.innerHTML)
     }
     this.root = root
   })

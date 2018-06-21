@@ -15,7 +15,7 @@ describe('check that createElement creates an element for renderer', () => {
     assert.deepEqual(element, { type: 'div', props: { id: 'wrapper' } })
   })
 
-  xit('creates a div element with a single child', () => {
+  it('creates a div element with a single child', () => {
     const element = Freact.createElement(
       'div',
       { id: 'wrapper' },
@@ -27,6 +27,25 @@ describe('check that createElement creates an element for renderer', () => {
         id: 'wrapper',
         children: [{ type: 'span', props: {} }],
       },
+    })
+  })
+  
+  it('creates a div element with multiple children', () => {
+    const element = Freact.createElement(
+      'div',
+      { id: 'wrapper' },
+      Freact.createElement('span'),
+      Freact.createElement('p', {}, Freact.createElement('h1'))
+    )
+    assert.deepEqual(element, {
+      type: 'div',
+      props: {
+        id: 'wrapper',
+        children: [
+          { type: 'span', props: {} },
+          { type: 'p' , props: { children: [ { type: 'h1', props: {} } ]}}
+        ]
+      }
     })
   })
 })

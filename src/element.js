@@ -8,8 +8,7 @@ function createElement(type, config, ...children) {
       .map(child => child instanceof Object ? child : createTextElement(child))
   }
   
-  const element = Object.assign({}, { type, props })
-  return element
+  return { type, props }
 }
 
 function createTextElement(value) {

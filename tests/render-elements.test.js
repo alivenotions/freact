@@ -1,6 +1,6 @@
 const assert = require('chai').assert
 
-const render = require('../src/FreactDOM')
+const render = require('../src/freactDOM')
 require('./mock-browser')
 
 describe('check the functionality of the render function', () => {

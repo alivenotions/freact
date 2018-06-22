@@ -35,7 +35,14 @@ describe('check that createElement creates an element for renderer', () => {
   })
 
   it('creates a div element with multiple children', () => {
-    const element = <div id="wrapper"><span /><p><h1 /></p></div>
+    const element = (
+      <div id="wrapper">
+        <span />
+        <p>
+          <h1 />
+        </p>
+      </div>
+    )
     assert.deepEqual(element, {
       type: 'div',
       props: {

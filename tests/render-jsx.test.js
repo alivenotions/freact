@@ -73,3 +73,40 @@ describe('check that createElement creates an element for renderer', () => {
     })
   })
 })
+
+describe('check that jsx is being rendered to DOM', () => {
+  beforeEach(function() {
+    let root = document.getElementById('root')
+    if (!root) {
+      root = document.createElement('div')
+      root.id = 'root'
+      document.body.appendChild(root)
+    }
+    this.root = root
+  })
+
+  afterEach(function() {
+    document.getElementById('root').innerHTML = ''
+  })
+
+  it('renders a div to the DOM', function() {
+    const element = <div />
+    render(element, this.root)
+    assert.equal(this.root.innerHTML, '<div></div>')
+  })
+
+  it('renders nested elements in div to the DOM', function() {
+    const element = (
+      <div id="wrapper">
+        <span>Hi</span>
+        <p />
+        <a href="#">Hi</a>
+      </div>
+    )
+    render(element, this.root)
+    assert.equal(
+      this.root.innerHTML,
+      '<div id="wrapper"><span>Hi</span><p></p><a href="#">Hi</a></div>'
+    )
+  })
+})

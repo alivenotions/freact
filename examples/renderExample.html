@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Hello World!</title> 
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="../src/element.js"></script>
+    <script src="../src/freactDOM.js"></script>
+    <script type="text/jsx" data-presets="es2016,react">
+      /** @jsx createElement */
+      const root = document.getElementById('root')
+      render(<div>Hello World</div>, root)
+    </script>
+  </body>
+</html>

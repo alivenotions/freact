@@ -12,10 +12,7 @@ describe('check that createElement creates an element for renderer', () => {
   })
 
   it('creates a div element with props', () => {
-    const element = Freact.createElement('div', {
-      id: 'wrapper',
-      class: 'container',
-    })
+    const element = <div id="wrapper" class="container" />
     assert.deepEqual(element, {
       type: 'div',
       props: { id: 'wrapper', class: 'container' },
@@ -38,12 +35,7 @@ describe('check that createElement creates an element for renderer', () => {
   })
 
   it('creates a div element with multiple children', () => {
-    const element = Freact.createElement(
-      'div',
-      { id: 'wrapper' },
-      Freact.createElement('span'),
-      Freact.createElement('p', {}, Freact.createElement('h1'))
-    )
+    const element = <div id="wrapper"><span /><p><h1 /></p></div>
     assert.deepEqual(element, {
       type: 'div',
       props: {

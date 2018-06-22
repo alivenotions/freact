@@ -4,7 +4,7 @@
   "description": "A replication of the react.js library",
   "main": "",
   "scripts": {
-    "test": "mocha --watch tests/*.test.js"
+    "test": "mocha --require babel-register --watch tests/*.test.js"
   },
   "repository": {
     "type": "git",
@@ -17,8 +17,30 @@
   },
   "homepage": "https://github.com/alivenotions/freact#readme",
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
     "browser-env": "^3.2.5",
     "chai": "^4.1.2",
     "mocha": "^5.2.0"
+  },
+  "babel": {
+    "plugins": [
+      [
+        "transform-react-jsx",
+        {}
+      ]
+    ],
+    "presets": [
+      [
+        "env",
+        {
+          "targets": {
+            "node": "current"
+          }
+        }
+      ]
+    ]
   }
 }

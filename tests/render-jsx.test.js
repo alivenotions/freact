@@ -3,16 +3,23 @@ const assert = require('chai').assert
 const Freact = require('../src/freact')
 const render = require('../src/freactDOM')
 require('./mock-browser')
+/** @jsx Freact.createElement */
 
 describe('check that createElement creates an element for renderer', () => {
   it('creates an empty div element', () => {
-    const element = Freact.createElement('div')
+    const element = <div />
     assert.deepEqual(element, { type: 'div', props: {} })
   })
 
   it('creates a div element with props', () => {
-    const element = Freact.createElement('div', { id: 'wrapper', class: 'container' })
-    assert.deepEqual(element, { type: 'div', props: { id: 'wrapper', class: 'container' } })
+    const element = Freact.createElement('div', {
+      id: 'wrapper',
+      class: 'container',
+    })
+    assert.deepEqual(element, {
+      type: 'div',
+      props: { id: 'wrapper', class: 'container' },
+    })
   })
 
   it('creates a div element with a single child', () => {
@@ -61,9 +68,9 @@ describe('check that createElement creates an element for renderer', () => {
       props: {
         children: [
           { type: 'TEXT_ELEMENT', props: { nodeValue: 'Hola!' } },
-          { type: 'span', props: {} }
-        ]
-      }
+          { type: 'span', props: {} },
+        ],
+      },
     })
   })
 })

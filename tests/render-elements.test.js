@@ -4,7 +4,7 @@ const render = require('../src/freactDOM')
 require('./mock-browser')
 
 describe('check the functionality of the render function', () => {
-  beforeEach(() => {
+  beforeEach(function() {
     let root = document.getElementById('root')
     if (!root) {
       root = document.createElement('div')
@@ -14,11 +14,11 @@ describe('check the functionality of the render function', () => {
     this.root = root
   })
 
-  afterEach(() => {
+  afterEach(function() {
     document.getElementById('root').innerHTML = ''
   })
 
-  it('renders an empty div', () => {
+  it('renders an empty div', function() {
     const element = {
       type: 'div',
       props: {},
@@ -27,7 +27,7 @@ describe('check the functionality of the render function', () => {
     assert.equal(this.root.innerHTML, '<div></div>')
   })
 
-  it('renders a div with an id', () => {
+  it('renders a div with an id', function() {
     const element = {
       type: 'div',
       props: {
@@ -38,7 +38,7 @@ describe('check the functionality of the render function', () => {
     assert.equal(this.root.innerHTML, '<div id="wrapper"></div>')
   })
 
-  it('renders a span with children', () => {
+  it('renders a span with children', function() {
     const element = {
       type: 'span',
       props: {
@@ -49,7 +49,7 @@ describe('check the functionality of the render function', () => {
     assert.equal(this.root.innerHTML, '<span><div></div><span></span></span>')
   })
 
-  it('renders a div with 2 levels of nesting', () => {
+  it('renders a div with 2 levels of nesting', function() {
     const element = {
       type: 'div',
       props: {
@@ -72,7 +72,7 @@ describe('check the functionality of the render function', () => {
     )
   })
 
-  it('render span with a text child', () => {
+  it('render span with a text child', function() {
     const element = {
       type: 'span',
       props: {

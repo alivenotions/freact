@@ -7,7 +7,7 @@ function render(element, container) {
 }
 
 function reconcile(parentDom, instance, element) {
-  if(instance == null) {
+  if (instance == null) {
     const newInstance = instantiate(element)
     parentDom.appendChild(newInstance.dom)
     return newInstance
@@ -27,8 +27,38 @@ function instantiate(element) {
     ? document.createTextNode('')
     : document.createElement(type)
 
+  updateDomProperties(dom, [], props)
+
+  // instantiate and append children
+  const childElements = props.children || []
+  const childInstances = childElements.map(instantiate)
+  const childDoms = childInstances.map(childInstance => childInstance.dom)
+  childDoms.forEach(childDom => dom.appendChild(childDom))
+
+  const instance = { dom, element, childInstances }
+  return instance
+}
+
+function updateDomProperties(dom, prevProps, nextProps) {
+  const isEvent = name => name.startsWith('on')
+  const isAttribute = name => !isEvent(name) && name !== 'children'
+
+  // Remove event listeners
+  Object.keys(prevProps)
+    .filter(isEvent)
+    .forEach(name => {
+      const eventType = name.toLowerCase().substring(2)
+      dom.removeEventListener(eventType, prevProps[name])
+    })
+
+  // Remove attributes
+  Object.keys(prevProps)
+    .filter(isAttribute)
+    .forEach(name => {
+      dom[name] = null
+    })
+
   // add event listeners to the element
-  const isListener = name => name.startsWith('on')
   Object.keys(props)
     .filter(isListener)
     .forEach(name => {
@@ -43,13 +73,4 @@ function instantiate(element) {
     .forEach(name => {
       dom[name] = props[name]
     })
-
-  // instantiate and append children
-  const childElements = props.children || []
-  const childInstances = childElements.map(instantiate)
-  const childDoms = childInstances.map(childInstance => childInstance.dom)
-  childDoms.forEach(childDom => dom.appendChild(childDom))
-
-  const instance = { dom, element, childInstances }
-  return instance
 }

@@ -11,6 +11,12 @@ function reconcile(parentDom, instance, element) {
     const newInstance = instantiate(element)
     parentDom.appendChild(newInstance.dom)
     return newInstance
+  } else if (instance.element.type === element.type) {
+    // if the type of the element is same then
+    // update the properties only
+    updateDomProperties(instance.dom, instance.element.props, element.props)
+    instance.element = element
+    return instance
   } else {
     const newInstance = instantiate(element)
     parentDom.replaceChild(newInstance.dom, instance.dom)

@@ -15,6 +15,15 @@ describe('check the reconciler works correctly', () => {
     this.root = root
   })
 
+  it('re-renders jsx div instead of appending', function() {
+    const root = this.root
+    const element = <div>Tadow!</div>
+    render(element, root)
+    assert.equal(root.innerHTML, '<div>Tadow!</div>')
+    render(element, root)
+    assert.equal(root.innerHTML, '<div>Tadow!</div>')
+  })
+
   it('replace div to span', function() {
     const root = this.root
     let element = <div>Tadow!</div>

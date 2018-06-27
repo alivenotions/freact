@@ -99,3 +99,5 @@ function updateDomProperties(dom, prevProps, nextProps) {
       dom[name] = props[name]
     })
 }
+
+module.exports = render

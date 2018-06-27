@@ -81,12 +81,10 @@ describe('check that jsx is being rendered to DOM', () => {
       root = document.createElement('div')
       root.id = 'root'
       document.body.appendChild(root)
+    } else {
+      root.innerHTML = ''
     }
     this.root = root
-  })
-
-  afterEach(function() {
-    document.getElementById('root').innerHTML = ''
   })
 
   it('renders a div to the DOM', function() {

@@ -10,12 +10,10 @@ describe('check the functionality of the render function', () => {
       root = document.createElement('div')
       root.id = 'root'
       document.body.appendChild(root)
+    } else {
+      root.innerHTML = ''
     }
     this.root = root
-  })
-
-  afterEach(function() {
-    document.getElementById('root').innerHTML = ''
   })
 
   it('renders an empty div', function() {

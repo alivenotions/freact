@@ -84,19 +84,18 @@ function updateDomProperties(dom, prevProps, nextProps) {
     })
 
   // add event listeners to the element
-  Object.keys(props)
-    .filter(isListener)
+  Object.keys(nextProps)
+    .filter(isEvent)
     .forEach(name => {
       const eventType = name.toLowerCase().substring(2)
-      dom.addEventListener(eventType, props[name])
+      dom.addEventListener(eventType, nextProps[name])
     })
 
   // add attributes to the element
-  const isAttribute = name => !isListener(name) && name !== 'children'
-  Object.keys(props)
+  Object.keys(nextProps)
     .filter(isAttribute)
     .forEach(name => {
-      dom[name] = props[name]
+      dom[name] = nextProps[name]
     })
 }
 

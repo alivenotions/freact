@@ -15,6 +15,7 @@ function reconcile(parentDom, instance, element) {
     // if the type of the element is same then
     // update the properties only
     updateDomProperties(instance.dom, instance.element.props, element.props)
+    instance.childInstances = reconcileChildren(instance, element)
     instance.element = element
     return instance
   } else {
@@ -22,6 +23,21 @@ function reconcile(parentDom, instance, element) {
     parentDom.replaceChild(newInstance.dom, instance.dom)
     return newInstance
   }
+}
+
+function reconcileChildren(instance, element) {
+  const dom = instance.dom
+  const childInstances = instance.childInstances
+  const nextChildElements = elements.props.children || []
+  const newChildInstances = []
+  const count = Math.max(childInstances.length, nextChildElements.length)
+  for (let i = 0; i < count; i++) {
+    const childInstance = childInstances[i]
+    const childElement = childElements[i]
+    const newChildInstance = reconcile(dom, childInstance, childElement)
+    newChildInstances.push(newChildInstance)
+  }
+  return newChildInstances
 }
 
 function instantiate(element) {

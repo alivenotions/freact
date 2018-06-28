@@ -25,6 +25,15 @@ describe('check the functionality of the render function', () => {
 
   it('renders a div with an id', function() {
     const element = {
+      type: 'div',
+      props: { id: 'wrapper' },
+    }
+    render(element, this.root)
+    assert.equal(this.root.innerHTML, '<div id="wrapper"></div>')
+  })
+
+  it('renders a span with an id', function() {
+    const element = {
       type: 'span',
       props: {
         id: 'wrapper',

@@ -40,7 +40,7 @@ function reconcileChildren(instance, element) {
     const newChildInstance = reconcile(dom, childInstance, childElement)
     newChildInstances.push(newChildInstance)
   }
-  return newChildInstances
+  return newChildInstances.filter(instance => instance != null)
 }
 
 function instantiate(element) {

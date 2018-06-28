@@ -80,7 +80,10 @@ function updateDomProperties(dom, prevProps, nextProps) {
   Object.keys(prevProps)
     .filter(isAttribute)
     .forEach(name => {
-      dom[name] = null
+      // text nodes don't have removeAttribute
+      !!dom.removeAttribute
+        ? dom.removeAttribute(name)
+        : dom[name] = null
     })
 
   // add event listeners to the element

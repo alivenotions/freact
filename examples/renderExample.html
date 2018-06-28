@@ -6,12 +6,12 @@
   <body>
     <div id="root"></div>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script src="../src/element.js"></script>
-    <script src="../src/freactDOM.js"></script>
+    <script src="../dist/dist.js"></script>
+    <!-- <script src="../src/reconciler.js"></script> -->
     <script type="text/jsx" data-presets="es2016,react">
-      /** @jsx createElement */
+      /** @jsx Freact.createElement */
       const root = document.getElementById('root')
-      render(<div>Hello World</div>, root)
+      Freact.render(<div>Hello World</div>, root)
     </script>
   </body>
 </html>

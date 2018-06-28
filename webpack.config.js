@@ -5,6 +5,7 @@ module.exports = {
   entry: './src/freact.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'dist.js'
+    filename: 'freact.js',
+    library: 'Freact'
   }
 }

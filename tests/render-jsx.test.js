@@ -1,7 +1,6 @@
 const assert = require('chai').assert
 
 const Freact = require('../src/freact')
-const render = require('../src/freactDOM')
 require('./mock-browser')
 /** @jsx Freact.createElement */
 
@@ -85,13 +84,9 @@ describe('check that jsx is being rendered to DOM', () => {
     this.root = root
   })
 
-  afterEach(function() {
-    document.getElementById('root').innerHTML = ''
-  })
-
   it('renders a div to the DOM', function() {
     const element = <div />
-    render(element, this.root)
+    Freact.render(element, this.root)
     assert.equal(this.root.innerHTML, '<div></div>')
   })
 
@@ -103,7 +98,7 @@ describe('check that jsx is being rendered to DOM', () => {
         <a href="#">Hi</a>
       </div>
     )
-    render(element, this.root)
+    Freact.render(element, this.root)
     assert.equal(
       this.root.innerHTML,
       '<div id="wrapper"><span>Hi</span><p></p><a href="#">Hi</a></div>'

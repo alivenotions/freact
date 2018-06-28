@@ -1,6 +1,6 @@
 const assert = require('chai').assert
 
-const render = require('../src/freactDOM')
+const { render } = require('../src/freact')
 require('./mock-browser')
 
 describe('check the functionality of the render function', () => {
@@ -12,10 +12,6 @@ describe('check the functionality of the render function', () => {
       document.body.appendChild(root)
     }
     this.root = root
-  })
-
-  afterEach(function() {
-    document.getElementById('root').innerHTML = ''
   })
 
   it('renders an empty div', function() {
@@ -30,12 +26,21 @@ describe('check the functionality of the render function', () => {
   it('renders a div with an id', function() {
     const element = {
       type: 'div',
+      props: { id: 'wrapper' },
+    }
+    render(element, this.root)
+    assert.equal(this.root.innerHTML, '<div id="wrapper"></div>')
+  })
+
+  it('renders a span with an id', function() {
+    const element = {
+      type: 'span',
       props: {
         id: 'wrapper',
       },
     }
     render(element, this.root)
-    assert.equal(this.root.innerHTML, '<div id="wrapper"></div>')
+    assert.equal(this.root.innerHTML, '<span id="wrapper"></span>')
   })
 
   it('renders a span with children', function() {

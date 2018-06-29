@@ -102,4 +102,4 @@ function updateDomProperties(dom, prevProps, nextProps) {
     })
 }
 
-module.exports = render
+module.exports = { render, reconcile }

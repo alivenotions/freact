@@ -8,10 +8,12 @@ function render(element, container) {
 
 function reconcile(parentDom, instance, element) {
   if (instance == null) {
+    // create instance
     const newInstance = instantiate(element)
     parentDom.appendChild(newInstance.dom)
     return newInstance
   } else if (element == null) {
+    // remove instance
     parentDom.removeChild(instance.dom)
     return null
   } else if (instance.element.type === element.type) {
@@ -21,10 +23,20 @@ function reconcile(parentDom, instance, element) {
     instance.childInstances = reconcileChildren(instance, element)
     instance.element = element
     return instance
-  } else {
+  } else if (instance.element.type !== element.type) {
     const newInstance = instantiate(element)
     parentDom.replaceChild(newInstance.dom, instance.dom)
     return newInstance
+  } else {
+    // update composite instance
+    instance.publicInstance.props = element.props
+    const childElement = instance.publicInstance.render()
+    const oldChildInstance = instance.childInstance
+    const childInstance = reconcile(parentDom, oldChildInstance, childElement)
+    instance.dom = childInstance.dom
+    instance.childInstance = childInstance
+    instance.element = element
+    return instance
   }
 }
 
@@ -45,23 +57,36 @@ function reconcileChildren(instance, element) {
 
 function instantiate(element) {
   const { type, props } = element
+  const isDomElement = typeof type === 'string'
 
-  // Create DOM element
-  const isTextElement = type === 'TEXT_ELEMENT'
-  const dom = isTextElement
-    ? document.createTextNode('')
-    : document.createElement(type)
+  if(isDomElement) {
+    // Create DOM element
+    const isTextElement = type === 'TEXT_ELEMENT'
+    const dom = isTextElement
+      ? document.createTextNode('')
+      : document.createElement(type)
 
-  updateDomProperties(dom, [], props)
+    updateDomProperties(dom, [], props)
 
-  // instantiate and append children
-  const childElements = props.children || []
-  const childInstances = childElements.map(instantiate)
-  const childDoms = childInstances.map(childInstance => childInstance.dom)
-  childDoms.forEach(childDom => dom.appendChild(childDom))
+    // instantiate and append children
+    const childElements = props.children || []
+    const childInstances = childElements.map(instantiate)
+    const childDoms = childInstances.map(childInstance => childInstance.dom)
+    childDoms.forEach(childDom => dom.appendChild(childDom))
 
-  const instance = { dom, element, childInstances }
-  return instance
+    const instance = { dom, element, childInstances }
+    return instance
+  } else {
+    // instantiate component element
+    const instance = {}
+    const publicInstance = createPublicInstance(element, instance)
+    const childElement = publicInstance.render()
+    const childInstance = instantiate(childElement)
+    const dom = childInstance.dom
+
+    Object.assign(instance, { dom, element, childInstance, publicInstance })
+    return instance
+  }
 }
 
 function updateDomProperties(dom, prevProps, nextProps) {
@@ -101,5 +126,14 @@ function updateDomProperties(dom, prevProps, nextProps) {
       dom[name] = nextProps[name]
     })
 }
+
+
+function createPublicInstance(element, internalInstance) {
+  const { type, props } = element
+  const publicInstance = new type(props)
+  publicInstance.__internalInstance = internalInstance
+  return publicInstance
+}
+
 
 module.exports = { render, reconcile }

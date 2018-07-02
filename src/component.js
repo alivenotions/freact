@@ -17,10 +17,3 @@ function updateInstance(internalInstance) {
   const element = internalInstance.element
   reconcile(parentDom, internalInstance, element)
 }
-
-function createPublicInstance(element, internalInstance) {
-  const { type, props } = element
-  const publicInstance = new type(props)
-  publicInstance.__internalInstance = internalInstance
-  return publicInstance
-}
